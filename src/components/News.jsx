@@ -13,8 +13,8 @@ const News = (props) => {
     document.title = (`${props.category[0].toUpperCase() + props.category.slice(1)} - Newsmonkey`)
 
 
-    const updateNews = async (page) => {
-        const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${pageSize}`;
+    const updateNews = async (page2) => {
+        const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${props.category}&apiKey=${props.apiKey}&page=${page2}&pageSize=${pageSize}`;
         props.setProgress(30)
         let api = await fetch(url);
         props.setProgress(50)
@@ -29,7 +29,7 @@ const News = (props) => {
 
     useEffect(() => {
         // console.log("i fire once")
-        updateNews()
+        updateNews(1)
     }, [])
 
     const fetchData = () => {
