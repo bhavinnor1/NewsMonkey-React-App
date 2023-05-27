@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import loading1 from './loading/loading1.gif';
 import loading2 from './loading/loading2.gif';
 import loading3 from './loading/loading3.gif';
@@ -11,21 +11,13 @@ import loading9 from './loading/loading9.gif';
 import loading10 from './loading/loading10.gif';
 import loading11 from './loading/loading11.gif';
 
-export class Spinner extends Component {
-    constructor() {
-        super()
-        this.state = {
-            loading: [loading1, loading2, loading3, loading4, loading5, loading6, loading7, loading8, loading9, loading10, loading11]
-        }
-    }
-
-    render() {
-        return (
-            <div className='text-center'>
-                <img style={{ margin: '25vh 0' }} src={this.state.loading[Math.floor(Math.random() * 12)]} alt="" />
-            </div>
-        )
-    }
+const Spinner = () => {
+    let loading = [loading1, loading2, loading3, loading4, loading5, loading6, loading7, loading8, loading9, loading10, loading11]
+    return (
+        <div className='text-center'>
+            <img style={{ margin: '25vh 0' }} src={loading[Math.floor(Math.random() * 12)]} alt="" />
+        </div>
+    )
 }
 
 export default Spinner

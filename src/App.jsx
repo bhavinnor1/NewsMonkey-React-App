@@ -1,119 +1,57 @@
 import './App.css'
 import NavBar from './components/NavBar'
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import News from './components/News'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Search from './components/Search'
 import LoadingBar from 'react-top-loading-bar'
-// const api_key = "dd37fb8453a14259b1ba963cb1f6adc7";
 
+const App = () => {
+  const apiKey = import.meta.env.VITE_NEWS_API_KEY_2;
+  const [articles, setArticles] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [search, setSearch] = useState("general")
+  const [country, setCountry] = useState("in")
+  const [totalResults, setTotalResults] = useState(0)
+  const [submitted, setSubmitted] = useState(false)
+  const [progress, setProgress] = useState(10)
 
-export default class App extends Component {
-  apiKey = import.meta.env.VITE_NEWS_API_KEY;
-  // apiKey = "dd37fb8453a14259b1ba963cb1f6adc7";
-  // constructor() {
-  //   super();
-  //   this.state = {
+  const handleChange = (e) => {
+    setSearch(e.target.value)
+  }
+  const handleSearch = async () => {
+    // console.log("Submitted", submitted)
+    setSubmitted(false)
+    setSubmitted(true)
+  }
+  const setProgress2 = (percent) => {
+    setProgress(percent)
+  }
+  return (
+    <>
+      <BrowserRouter>
+        <NavBar submitted={submitted} search={search} handleChange={handleChange} handleSearch={handleSearch} />
+        <LoadingBar
+          color='#f11946'
+          progress={progress}
+        />
+        <Routes>
+          <Route exact path='/' element={<News setProgress={setProgress2} key="home" category="general" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/science' element={<News setProgress={setProgress2} key="science" category="science" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/sports' element={<News setProgress={setProgress2} key="sports" category="sports" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/business' element={<News setProgress={setProgress2} key="business" category="business" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/entertainment' element={<News setProgress={setProgress2} key="entertainment" category="entertainment" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/general' element={<News setProgress={setProgress2} key="general" category="general" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/health' element={<News setProgress={setProgress} key="health" category="health" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/technology' element={<News setProgress={setProgress2} key="technology" category="technology" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/search' element={<Search key="technology" setSubmitted={setSubmitted} submitted={submitted} setProgress={setProgress2} category="technology" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} apiKey={apiKey} />} />
+        </Routes>
 
-  //   }
-  // }
-  constructor() {
-    super();
-    this.state = {
-      articles: [],
-      loading: false,
-      page: 1,
-      fload: 0,
-      pageSize: 10,
-      search: "",
-      country: "in",
-      category: "business",
-      submitted: false,
-      progress: 10
-    }
-  }
-  handleChange = (e) => {
-    this.setState({
-      search: e.target.value
-    })
-  }
-  async updateNews() {
-    const url = `https://newsapi.org/v2/top-headlines?q=${this.state.search}&apiKey=${this.apiKey}&page=${this.state.page}&pageSize=${this.state.pageSize}`;
-    this.setState({
-      loading: true
-    })
-    let api = await fetch(url);
-    let data = await api.json();
-    console.log("updatenews", data);
-    this.setState({
-      articles: data.articles,
-      loading: false,
-      totalResults: data.totalResults
-    })
-  }
-  handleSearch = async () => {
-    const url = `https://newsapi.org/v2/top-headlines?q=${this.state.search}&apiKey=${this.apiKey}&pageSize=${this.state.pageSize}`;
-    this.setState({
-      loading: true,
-      submitted: true
-    })
-    let api = await fetch(url);
-    let data = await api.json();
-    console.log("updatenews", data);
-    console.log(data.articles);
-    this.setState({
-      articles: data.articles,
-      loading: false,
-      totalResults: data.totalResults,
-      submitted: false
-    })
-  }
-  handlePreviousClick = async () => {
-    this.setState({
-      page: this.state.page - 1
-    }, () => {
-      console.log("Previous", this.state.page)
-      this.updateNews()
-    })
-
-  }
-  handleNextClick = async () => {
-    console.log("Next before edit", this.state.page)
-    this.setState({
-      page: this.state.page + 1
-    }, () => {
-      console.log("Next", this.state.page)
-      this.updateNews()
-    })
-  }
-  setProgress = (percent) => {
-    this.setState({
-      progress: percent
-    })
-  }
-  render() {
-    return (
-      <>
-        <BrowserRouter>
-          <NavBar submitted={this.state.submitted} search={this.state.search} handleChange={this.handleChange} handleSearch={this.handleSearch} />
-          <LoadingBar
-            color='#f11946'
-            progress={this.state.progress}
-          />
-          <Routes>
-            <Route exact path='/' element={<News setProgress={this.setProgress} key="home" category="general" handleNextClick={this.handleNextClick} handlePreviousClick={this.handlePreviousClick} totalResults={this.state.totalResults} page={this.state.page} loading={this.state.loading} articles={this.state.articles} search={this.state.search} pageSize={this.state.pageSize} country="in" apiKey={this.apiKey} />} />
-            <Route exact path='/science' element={<News setProgress={this.setProgress} key="science" category="science" handleNextClick={this.handleNextClick} handlePreviousClick={this.handlePreviousClick} totalResults={this.state.totalResults} page={this.state.page} loading={this.state.loading} articles={this.state.articles} search={this.state.search} pageSize={this.state.pageSize} country="in" apiKey={this.apiKey} />} />
-            <Route exact path='/sports' element={<News setProgress={this.setProgress} key="sports" category="sports" handleNextClick={this.handleNextClick} handlePreviousClick={this.handlePreviousClick} totalResults={this.state.totalResults} page={this.state.page} loading={this.state.loading} articles={this.state.articles} search={this.state.search} pageSize={this.state.pageSize} country="in" apiKey={this.apiKey} />} />
-            <Route exact path='/business' element={<News setProgress={this.setProgress} key="business" category="business" handleNextClick={this.handleNextClick} handlePreviousClick={this.handlePreviousClick} totalResults={this.state.totalResults} page={this.state.page} loading={this.state.loading} articles={this.state.articles} search={this.state.search} pageSize={this.state.pageSize} country="in" apiKey={this.apiKey} />} />
-            <Route exact path='/entertainment' element={<News setProgress={this.setProgress} key="entertainment" category="entertainment" handleNextClick={this.handleNextClick} handlePreviousClick={this.handlePreviousClick} totalResults={this.state.totalResults} page={this.state.page} loading={this.state.loading} articles={this.state.articles} search={this.state.search} pageSize={this.state.pageSize} country="in" apiKey={this.apiKey} />} />
-            <Route exact path='/general' element={<News setProgress={this.setProgress} key="general" category="general" handleNextClick={this.handleNextClick} handlePreviousClick={this.handlePreviousClick} totalResults={this.state.totalResults} page={this.state.page} loading={this.state.loading} articles={this.state.articles} search={this.state.search} pageSize={this.state.pageSize} country="in" apiKey={this.apiKey} />} />
-            <Route exact path='/health' element={<News setProgress={this.setProgress} key="health" category="health" handleNextClick={this.handleNextClick} handlePreviousClick={this.handlePreviousClick} totalResults={this.state.totalResults} page={this.state.page} loading={this.state.loading} articles={this.state.articles} search={this.state.search} pageSize={this.state.pageSize} country="in" apiKey={this.apiKey} />} />
-            <Route exact path='/technology' element={<News setProgress={this.setProgress} key="technology" category="technology" handleNextClick={this.handleNextClick} handlePreviousClick={this.handlePreviousClick} totalResults={this.state.totalResults} page={this.state.page} loading={this.state.loading} articles={this.state.articles} search={this.state.search} pageSize={this.state.pageSize} country="in" apiKey={this.apiKey} />} />
-            <Route exact path='/search' element={<Search key="technology" category="technology" handleNextClick={this.handleNextClick} handlePreviousClick={this.handlePreviousClick} totalResults={this.state.totalResults} page={this.state.page} loading={this.state.loading} articles={this.state.articles} search={this.state.search} pageSize={this.state.pageSize} country="in" apiKey={this.apiKey} />} />
-          </Routes>
-
-        </BrowserRouter>
-      </>
-    )
-  }
+      </BrowserRouter>
+    </>
+  )
 }
+
+export default App
