@@ -14,11 +14,13 @@ const News = (props) => {
 
 
     const updateNews = async (page2) => {
-        const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${props.category}&apiKey=${props.apiKey}&page=${page2}&pageSize=${pageSize}`;
+        const url = `${props.apiSite}/v2/top-headlines?country=${country}&category=${props.category}&page=${page2}&pageSize=${pageSize}`;
         props.setProgress(30)
         let api = await fetch(url);
+        console.log(api);
         props.setProgress(50)
         let data = await api.json();
+        console.log(data);
         props.setProgress(70)
         // console.log("updatenews", data);
         setArticles(articles.concat(data.articles))
