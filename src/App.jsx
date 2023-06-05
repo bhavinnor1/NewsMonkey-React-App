@@ -29,6 +29,7 @@ const App = () => {
   const setProgress2 = (percent) => {
     setProgress(percent)
   }
+  const apiSite = "https://hello-world-icy-cherry-2d08.bhavin-openspace.workers.dev";
   return (
     <>
       <BrowserRouter>
@@ -38,15 +39,15 @@ const App = () => {
           progress={progress}
         />
         <Routes>
-          <Route exact path='/' element={<News setProgress={setProgress2} key="home" category="general" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
-          <Route exact path='/science' element={<News setProgress={setProgress2} key="science" category="science" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
-          <Route exact path='/sports' element={<News setProgress={setProgress2} key="sports" category="sports" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
-          <Route exact path='/business' element={<News setProgress={setProgress2} key="business" category="business" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
-          <Route exact path='/entertainment' element={<News setProgress={setProgress2} key="entertainment" category="entertainment" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
-          <Route exact path='/general' element={<News setProgress={setProgress2} key="general" category="general" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
-          <Route exact path='/health' element={<News setProgress={setProgress} key="health" category="health" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
-          <Route exact path='/technology' element={<News setProgress={setProgress2} key="technology" category="technology" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
-          <Route exact path='/search' element={<Search key="technology" setSubmitted={setSubmitted} submitted={submitted} setProgress={setProgress2} category="technology" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} apiKey={apiKey} />} />
+          <Route exact path='/' element={<News apiSite={apiSite} setProgress={setProgress2} key="home" category="general" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/science' element={<News apiSite={apiSite} setProgress={setProgress2} key="science" category="science" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/sports' element={<News apiSite={apiSite} setProgress={setProgress2} key="sports" category="sports" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/business' element={<News apiSite={apiSite} setProgress={setProgress2} key="business" category="business" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/entertainment' element={<News apiSite={apiSite} setProgress={setProgress2} key="entertainment" category="entertainment" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/general' element={<News apiSite={apiSite} setProgress={setProgress2} key="general" category="general" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/health' element={<News apiSite={apiSite} setProgress={setProgress} key="health" category="health" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/technology' element={<News apiSite={apiSite} setProgress={setProgress2} key="technology" category="technology" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} country="in" apiKey={apiKey} />} />
+          <Route exact path='/search' element={<Search apiSite={apiSite} key="technology" setSubmitted={setSubmitted} submitted={submitted} setProgress={setProgress2} category="technology" totalResults={totalResults} page={page} loading={loading} articles={articles} search={search} pageSize={pageSize} apiKey={apiKey} />} />
         </Routes>
 
       </BrowserRouter>
