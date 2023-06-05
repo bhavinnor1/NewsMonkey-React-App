@@ -14,10 +14,11 @@ const Search = (props) => {
     document.title = (`${props.category[0].toUpperCase() + props.category.slice(1)} - Newsmonkey`)
 
     const updateNews = async (page2) => {
-        const url = `https://newsapi.org/v2/top-headlines?q=${props.search}&apiKey=${props.apiKey}&page=${page2}&pageSize=${pageSize}`;
+        const url = `${props.apiSite}/v2/top-headlines?q=${props.search}&page=${page2}&pageSize=${pageSize}`;
         props.setProgress(30)
         let api = await fetch(url);
-        props.setProgress(50)
+        console.log(api);
+        // props.setProgress(50)
         let data = await api.json();
         props.setProgress(70)
         // console.log("updatenews", data);
@@ -40,7 +41,7 @@ const Search = (props) => {
         console.log("abcd usestae")
         const abc = async () => {
             if (props.submitted === true) {
-                const url = `https://newsapi.org/v2/top-headlines?q=${props.search}&apiKey=${props.apiKey}&page=${page}&pageSize=${pageSize}`;
+                const url = `${props.apiSite}/v2/top-headlines?q=${props.search}&page=${page}&pageSize=${pageSize}`;
                 setLoading(true)
                 props.setSubmitted(true)
                 let api = await fetch(url);
